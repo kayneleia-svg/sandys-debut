@@ -9,85 +9,99 @@ export default function Home() {
     { image: "/image4.png" },
   ];
 
-  const [index, setIndex] = useState(0);
+  const [[index, direction], setIndex] = useState([0, 0]);
 
+  // Auto-slide every 5 seconds
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
+    const interval = setInterval(() => {
+      paginate(1);
     }, 5000);
-    return () => clearInterval(timer);
+    return () => clearInterval(interval);
   }, []);
 
-  return (
-    <div style={styles.page}>
-      <h1 style={styles.title}>Sandy’s Debut ✨</h1>
+  const paginate = (newDirection) => {
+    setIndex([
+      (index + newDirection + slides.length) % slides.length,
+      newDirection,
+    ]);
+  };
 
-      <div style={styles.card}>
-        <AnimatePresence mode="wait">
+  const variants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      x: direction < 0 ? 300 : -300,
+      opacity: 0,
+    }),
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-pink-300 via-red-300 to-red-400 flex flex-col items-center justify-center p-6">
+      
+      {/* Title */}
+      <h1
+        style={{ fontFamily: "'Brush Script MT', cursive" }}
+        className="text-4xl mb-6 text-white drop-shadow-lg"
+      >
+        Sandy’s Debut
+      </h1>
+
+      {/* Slideshow */}
+      <div className="max-w-md w-full rounded-2xl shadow-xl mb-6 bg-white p-6 overflow-hidden">
+        <AnimatePresence custom={direction} mode="wait">
           <motion.img
             key={index}
             src={slides[index].image}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
             transition={{ duration: 0.8 }}
-            style={styles.image}
+            className="w-full rounded-xl"
           />
         </AnimatePresence>
 
-        <div style={styles.buttons}>
-          <button onClick={() => setIndex((index - 1 + slides.length) % slides.length)}>
+        <div className="flex justify-between mt-6">
+          <button
+            className="px-4 py-2 border border-gray-400 rounded hover:bg-gray-100"
+            onClick={() => paginate(-1)}
+          >
             Previous
           </button>
-          <button onClick={() => setIndex((index + 1) % slides.length)}>
+          <button
+            className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600"
+            onClick={() => paginate(1)}
+          >
             Next
           </button>
         </div>
       </div>
 
-      <div style={styles.card}>
-        <h2>RSVP 💌</h2>
+      {/* RSVP */}
+      <div className="max-w-md w-full rounded-2xl shadow-xl bg-white p-4">
+        <h2
+          style={{ fontFamily: "'Brush Script MT', cursive" }}
+          className="text-3xl text-center mb-3 text-pink-600"
+        >
+          RSVP
+        </h2>
+        <p className="text-sm text-center mb-4">
+          Please confirm your attendance by filling out the form below 💌
+        </p>
         <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLScSlAcpKucFkVD0UwEpCLq47ImbyF2pEpynKGn1vekvG6mAiA/viewform"
           width="100%"
           height="500"
-          style={{ borderRadius: "12px", border: "1px solid #ccc" }}
+          className="rounded-xl border"
         />
       </div>
     </div>
   );
 }
-
-const styles = {
-  page: {
-    minHeight: "100vh",
-    background: "linear-gradient(#fde2e4, #e4c1f9)",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "20px",
-  },
-  title: {
-    fontSize: "2rem",
-    marginBottom: "20px",
-  },
-  card: {
-    background: "#fff",
-    borderRadius: "16px",
-    padding: "16px",
-    width: "100%",
-    maxWidth: "400px",
-    marginBottom: "20px",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-  },
-  image: {
-    width: "100%",
-    borderRadius: "12px",
-  },
-  buttons: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginTop: "12px",
-  },
-};
-
