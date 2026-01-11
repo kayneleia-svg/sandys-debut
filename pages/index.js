@@ -80,13 +80,13 @@ function Slideshow({ slides, interval = 5000 }) {
   );
 }
 
-// ================== GOLD PAPER HEARTS COMPONENT ==================
-function FloatingHearts({ count = 25 }) {
-  const hearts = Array.from({ length: count });
+// ================== GOLD GLOWING CIRCLES ==================
+function FloatingCircles({ count = 30 }) {
+  const circles = Array.from({ length: count });
 
-  return hearts.map((_, i) => {
-    const size = Math.random() * 24 + 12;
-    const left = Math.random() * 100;
+  return circles.map((_, i) => {
+    const size = Math.random() * 20 + 10; // 10px to 30px
+    const left = Math.random() * 100; // %
     const delay = Math.random() * 5;
     const duration = Math.random() * 10 + 8;
 
@@ -96,13 +96,15 @@ function FloatingHearts({ count = 25 }) {
         style={{
           position: "absolute",
           left: `${left}%`,
-          fontSize: size,
-          color: "#d4af37", // deeper gold, like paper
-          textShadow: "1px 1px 2px rgba(0,0,0,0.2)", // subtle shadow for paper effect
+          width: size,
+          height: size,
+          borderRadius: "50%",
+          backgroundColor: "#FFD700", // gold
+          boxShadow: "0 0 10px 3px #FFD700",
           pointerEvents: "none",
         }}
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: -1500, opacity: 1 }}
+        initial={{ y: 100, opacity: 0.7 }}
+        animate={{ y: -1500, opacity: 0.9 }}
         transition={{
           duration: duration,
           repeat: Infinity,
@@ -110,9 +112,7 @@ function FloatingHearts({ count = 25 }) {
           delay: delay,
           ease: "linear",
         }}
-      >
-        ❤️
-      </motion.div>
+      />
     );
   });
 }
@@ -128,7 +128,7 @@ export default function Home() {
 
   return (
     <div style={styles.page}>
-      <FloatingHearts count={25} />
+      <FloatingCircles count={30} />
       <h1 style={styles.title}>You're invited to...</h1>
 
       <Slideshow slides={slides} />
@@ -139,10 +139,7 @@ export default function Home() {
           src="https://forms.gle/vim823duYf3UiqPHA"
           width="100%"
           height="500"
-          style={{
-            borderRadius: "12px",
-            border: "3px solid #800020", // burgundy border
-          }}
+          style={{ borderRadius: "12px", background: "rgba(255,182,193,0.4)" }}
         />
       </div>
     </div>
@@ -153,7 +150,7 @@ export default function Home() {
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "linear-gradient(to bottom, #fde2e4, #ff0000)", // soft pink → bold red
+    background: "linear-gradient(to bottom, #fde2e4, #8b0000)", // soft pink → bold darker red
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -166,20 +163,24 @@ const styles = {
     marginBottom: "20px",
     fontFamily: '"Brush Script MT", cursive',
     fontWeight: "bold",
-    color: "gold",
+    color: "#FFFF00", // yellow fill
+    WebkitTextStroke: "1px #FFD700", // gold outline
+    textStroke: "1px #FFD700",
     textAlign: "center",
     zIndex: 1,
   },
   rsvpTitle: {
     fontFamily: '"Brush Script MT", cursive',
     fontWeight: "bold",
-    color: "gold",
+    color: "#FFFF00", // yellow fill
+    WebkitTextStroke: "1px #FFD700", // gold outline
+    textStroke: "1px #FFD700",
     textAlign: "center",
     fontSize: "2rem",
     marginBottom: "12px",
   },
   card: {
-    background: "rgba(255, 255, 255, 0.9)",
+    background: "rgba(255,182,193,0.4)", // transparent soft pink
     borderRadius: "16px",
     padding: "16px",
     width: "100%",
@@ -189,13 +190,12 @@ const styles = {
     overflow: "hidden",
     position: "relative",
     zIndex: 1,
-    border: "3px solid #800020", // burgundy border
   },
   imageWrapper: {
     borderRadius: "12px",
     overflow: "hidden",
     position: "relative",
-    border: "3px solid #800020", // burgundy border
+    background: "rgba(255,182,193,0.3)", // transparent soft pink behind image
   },
   image: {
     width: "100%",
