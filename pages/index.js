@@ -80,36 +80,38 @@ function Slideshow({ slides, interval = 5000 }) {
   );
 }
 
-// ================== GOLD GLOWING CIRCLES ==================
+// ================== TRANSPARENT WHITE SIDES TO CENTER ==================
 function FloatingCircles({ count = 30 }) {
   const circles = Array.from({ length: count });
 
   return circles.map((_, i) => {
     const size = Math.random() * 20 + 10; // 10px to 30px
-    const left = Math.random() * 100; // %
+    const fromLeft = Math.random() > 0.5; // decide left or right start
+    const startX = fromLeft ? -size : window.innerWidth + size; // offscreen
+    const endX = window.innerWidth / 2 - size / 2; // middle of the screen
     const delay = Math.random() * 5;
-    const duration = Math.random() * 10 + 8;
+    const duration = Math.random() * 6 + 4; // speed variation
 
     return (
       <motion.div
         key={i}
         style={{
           position: "absolute",
-          left: `${left}%`,
+          top: `${Math.random() * 100}%`, // random vertical position
           width: size,
           height: size,
           borderRadius: "50%",
-          backgroundColor: "#FFD700", // gold
-          boxShadow: "0 0 10px 3px #FFD700",
+          backgroundColor: "rgba(255,255,255,0.3)",
+          boxShadow: "0 0 8px 2px rgba(255,255,255,0.3)",
           pointerEvents: "none",
         }}
-        initial={{ y: 100, opacity: 0.7 }}
-        animate={{ y: -1500, opacity: 0.9 }}
+        initial={{ x: startX, opacity: 0 }}
+        animate={{ x: endX, opacity: 0 }}
         transition={{
           duration: duration,
+          delay: delay,
           repeat: Infinity,
           repeatType: "loop",
-          delay: delay,
           ease: "linear",
         }}
       />
@@ -150,7 +152,7 @@ export default function Home() {
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "linear-gradient(to bottom, #fde2e4, #8b0000)", // soft pink → bold darker red
+    background: "linear-gradient(to bottom, #fde2e4, #8b0000)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -163,24 +165,22 @@ const styles = {
     marginBottom: "20px",
     fontFamily: '"Brush Script MT", cursive',
     fontWeight: "bold",
-    color: "#FFFF00", // yellow fill
-    WebkitTextStroke: "1px #FFD700", // gold outline
-    textStroke: "1px #FFD700",
+    color: "#ffffff",
+    letterSpacing: "0.5em",
     textAlign: "center",
     zIndex: 1,
   },
   rsvpTitle: {
     fontFamily: '"Brush Script MT", cursive',
     fontWeight: "bold",
-    color: "#FFFF00", // yellow fill
-    WebkitTextStroke: "1px #FFD700", // gold outline
-    textStroke: "1px #FFD700",
+    color: "#ffffff",
+    letterSpacing: "0.5em",
     textAlign: "center",
     fontSize: "2rem",
     marginBottom: "12px",
   },
   card: {
-    background: "rgba(255,182,193,0.4)", // transparent soft pink
+    background: "rgba(255,182,193,0.4)",
     borderRadius: "16px",
     padding: "16px",
     width: "100%",
@@ -195,7 +195,7 @@ const styles = {
     borderRadius: "12px",
     overflow: "hidden",
     position: "relative",
-    background: "rgba(255,182,193,0.3)", // transparent soft pink behind image
+    background: "rgba(255,182,193,0.3)",
   },
   image: {
     width: "100%",
@@ -231,4 +231,3 @@ const styles = {
     cursor: "pointer",
   },
 };
-
