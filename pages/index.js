@@ -42,8 +42,32 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-300 via-red-300 to-red-400 flex flex-col items-center justify-center p-6">
+    <div className="relative min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-b from-pink-200 via-rose-300 to-red-300 overflow-hidden">
       
+      {/* Gold Hearts Animation */}
+      {[...Array(15)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-6 h-6 rounded-full bg-yellow-300 opacity-40"
+          style={{
+            left: `${Math.random() * 100}%`,
+            bottom: `-${Math.random() * 100}px`,
+          }}
+          animate={{
+            y: ["0px", "-800px"],
+            x: [`0px`, `${Math.random() * 50 - 25}px`],
+            opacity: [0.4, 0],
+          }}
+          transition={{
+            repeat: Infinity,
+            repeatType: "loop",
+            duration: Math.random() * 10 + 5,
+            ease: "linear",
+            delay: Math.random() * 5,
+          }}
+        />
+      ))}
+
       {/* Title */}
       <h1
         style={{ fontFamily: "'Brush Script MT', cursive" }}
