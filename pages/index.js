@@ -19,7 +19,6 @@ function Slideshow({ slides, interval = 5000 }) {
     const offset = info.offset.x;
     const velocity = info.velocity.x;
 
-    // Swipe threshold
     if (offset < -100 || velocity < -500) {
       setIndex((index + 1) % slides.length);
     } else if (offset > 100 || velocity > 500) {
@@ -55,7 +54,6 @@ function Slideshow({ slides, interval = 5000 }) {
         <button onClick={() => setIndex((index + 1) % slides.length)}>Next</button>
       </div>
 
-      {/* Optional page indicators */}
       <div style={styles.dots}>
         {slides.map((_, i) => (
           <span
@@ -72,6 +70,42 @@ function Slideshow({ slides, interval = 5000 }) {
   );
 }
 
+// ================== GOLD HEARTS COMPONENT ==================
+function FloatingHearts({ count = 20 }) {
+  const hearts = Array.from({ length: count });
+
+  return hearts.map((_, i) => {
+    const size = Math.random() * 24 + 12; // 12px to 36px
+    const left = Math.random() * 100; // % from left
+    const delay = Math.random() * 5; // seconds
+    const duration = Math.random() * 10 + 8; // seconds
+
+    return (
+      <motion.div
+        key={i}
+        style={{
+          position: "absolute",
+          left: `${left}%`,
+          fontSize: size,
+          color: "gold",
+          pointerEvents: "none",
+        }}
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: -1500, opacity: 1 }}
+        transition={{
+          duration: duration,
+          repeat: Infinity,
+          repeatType: "loop",
+          delay: delay,
+          ease: "linear",
+        }}
+      >
+        ❤️
+      </motion.div>
+    );
+  });
+}
+
 // ================== MAIN PAGE ==================
 export default function Home() {
   const slides = [
@@ -83,12 +117,13 @@ export default function Home() {
 
   return (
     <div style={styles.page}>
+      <FloatingHearts count={25} /> {/* Gold hearts floating */}
       <h1 style={styles.title}>You're invited to...</h1>
 
       <Slideshow slides={slides} />
 
       <div style={styles.card}>
-        <h2>RSVP</h2>
+        <h2 style={styles.rsvpTitle}>RSVP</h2>
         <iframe
           src="https://forms.gle/vim823duYf3UiqPHA"
           width="100%"
@@ -109,10 +144,23 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     padding: "20px",
+    position: "relative", // for floating hearts
+    overflow: "hidden",
   },
   title: {
-    fontSize: "2rem",
+    fontSize: "3rem",
     marginBottom: "20px",
+    fontFamily: '"Brush Script MT", cursive',
+    color: "gold",
+    textAlign: "center",
+    zIndex: 1,
+  },
+  rsvpTitle: {
+    fontFamily: '"Brush Script MT", cursive',
+    color: "gold",
+    textAlign: "center",
+    fontSize: "2rem",
+    marginBottom: "12px",
   },
   card: {
     background: "#fff",
@@ -123,6 +171,8 @@ const styles = {
     marginBottom: "20px",
     boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
     overflow: "hidden",
+    position: "relative",
+    zIndex: 1,
   },
   imageWrapper: {
     borderRadius: "12px",
