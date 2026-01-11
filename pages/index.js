@@ -47,13 +47,23 @@ function Slideshow({ slides, interval = 5000 }) {
         </AnimatePresence>
       </div>
 
+      {/* Arrows below the image */}
       <div style={styles.buttons}>
-        <button onClick={() => setIndex((index - 1 + slides.length) % slides.length)}>
-          Previous
+        <button
+          onClick={() => setIndex((index - 1 + slides.length) % slides.length)}
+          style={styles.arrowButton}
+        >
+          ‹
         </button>
-        <button onClick={() => setIndex((index + 1) % slides.length)}>Next</button>
+        <button
+          onClick={() => setIndex((index + 1) % slides.length)}
+          style={styles.arrowButton}
+        >
+          ›
+        </button>
       </div>
 
+      {/* Slide Dots */}
       <div style={styles.dots}>
         {slides.map((_, i) => (
           <span
@@ -70,13 +80,13 @@ function Slideshow({ slides, interval = 5000 }) {
   );
 }
 
-// ================== GOLD HEARTS COMPONENT ==================
+// ================== GOLD PAPER HEARTS COMPONENT ==================
 function FloatingHearts({ count = 25 }) {
   const hearts = Array.from({ length: count });
 
   return hearts.map((_, i) => {
-    const size = Math.random() * 24 + 12; // 12px to 36px
-    const left = Math.random() * 100; // % from left
+    const size = Math.random() * 24 + 12;
+    const left = Math.random() * 100;
     const delay = Math.random() * 5;
     const duration = Math.random() * 10 + 8;
 
@@ -87,7 +97,8 @@ function FloatingHearts({ count = 25 }) {
           position: "absolute",
           left: `${left}%`,
           fontSize: size,
-          color: "gold",
+          color: "#d4af37", // deeper gold, like paper
+          textShadow: "1px 1px 2px rgba(0,0,0,0.2)", // subtle shadow for paper effect
           pointerEvents: "none",
         }}
         initial={{ y: 100, opacity: 0 }}
@@ -128,7 +139,10 @@ export default function Home() {
           src="https://forms.gle/vim823duYf3UiqPHA"
           width="100%"
           height="500"
-          style={{ borderRadius: "12px", border: "1px solid #ccc" }}
+          style={{
+            borderRadius: "12px",
+            border: "3px solid #800020", // burgundy border
+          }}
         />
       </div>
     </div>
@@ -139,25 +153,25 @@ export default function Home() {
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "linear-gradient(to bottom, #fde2e4, #f88379)", // soft pink to red gradient
+    background: "linear-gradient(to bottom, #fde2e4, #ff0000)", // soft pink → bold red
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     padding: "20px",
-    position: "relative", // for floating hearts
+    position: "relative",
     overflow: "hidden",
   },
   title: {
     fontSize: "3rem",
     marginBottom: "20px",
-    fontFamily: '"Palace Script MT", cursive',
+    fontFamily: '"Brush Script MT", cursive',
     fontWeight: "bold",
     color: "gold",
     textAlign: "center",
     zIndex: 1,
   },
   rsvpTitle: {
-    fontFamily: '"Palace Script MT", cursive',
+    fontFamily: '"Brush Script MT", cursive',
     fontWeight: "bold",
     color: "gold",
     textAlign: "center",
@@ -165,7 +179,7 @@ const styles = {
     marginBottom: "12px",
   },
   card: {
-    background: "rgba(255, 255, 255, 0.9)", // slightly transparent
+    background: "rgba(255, 255, 255, 0.9)",
     borderRadius: "16px",
     padding: "16px",
     width: "100%",
@@ -175,10 +189,13 @@ const styles = {
     overflow: "hidden",
     position: "relative",
     zIndex: 1,
+    border: "3px solid #800020", // burgundy border
   },
   imageWrapper: {
     borderRadius: "12px",
     overflow: "hidden",
+    position: "relative",
+    border: "3px solid #800020", // burgundy border
   },
   image: {
     width: "100%",
@@ -189,6 +206,17 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     marginTop: "12px",
+  },
+  arrowButton: {
+    background: "none",
+    border: "none",
+    fontSize: "2rem",
+    color: "gold",
+    fontWeight: "bold",
+    cursor: "pointer",
+    padding: "4px 12px",
+    userSelect: "none",
+    transition: "transform 0.2s",
   },
   dots: {
     display: "flex",
@@ -203,3 +231,4 @@ const styles = {
     cursor: "pointer",
   },
 };
+
