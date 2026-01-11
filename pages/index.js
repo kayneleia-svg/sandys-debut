@@ -1,48 +1,84 @@
-function FloatingCircles({ count = 30 }) {
-  const [windowWidth, setWindowWidth] = useState(0);
+import Slideshow from "../components/Slideshow";
+import FloatingCircles from "../components/FloatingCircles";
 
-  useEffect(() => {
-    setWindowWidth(window.innerWidth); // safe to use only on client
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+export default function Home() {
+  // Slide images in the public folder
+  const slides = [
+    { image: "/image1.png" },
+    { image: "/image2.png" },
+    { image: "/image3.png" },
+    { image: "/image4.png" },
+  ];
 
-  if (!windowWidth) return null; // wait for client render
+  return (
+    <div style={styles.page}>
+      {/* Floating circles on the sides */}
+      <FloatingCircles count={30} />
 
-  const circles = Array.from({ length: count });
+      {/* Title */}
+      <h1 style={styles.title}>You're invited to...</h1>
 
-  return circles.map((_, i) => {
-    const size = Math.random() * 20 + 10;
-    const fromLeft = Math.random() > 0.5;
-    const startX = fromLeft ? -size : windowWidth + size;
-    const endX = windowWidth / 2 - size / 2;
-    const delay = Math.random() * 5;
-    const duration = Math.random() * 6 + 4;
+      {/* Slideshow */}
+      <Slideshow slides={slides} />
 
-    return (
-      <motion.div
-        key={i}
-        style={{
-          position: "absolute",
-          top: `${Math.random() * 100}%`,
-          width: size,
-          height: size,
-          borderRadius: "50%",
-          backgroundColor: "rgba(255,255,255,0.3)",
-          boxShadow: "0 0 8px 2px rgba(255,255,255,0.3)",
-          pointerEvents: "none",
-        }}
-        initial={{ x: startX, opacity: 0 }}
-        animate={{ x: endX, opacity: 0 }}
-        transition={{
-          duration: duration,
-          delay: delay,
-          repeat: Infinity,
-          repeatType: "loop",
-          ease: "linear",
-        }}
-      />
-    );
-  });
+      {/* RSVP section */}
+      <div style={styles.card}>
+        <h2 style={styles.rsvpTitle}>RSVP</h2>
+        <iframe
+          src="https://forms.gle/DztA7kx3Fqcc74fw6"
+          width="100%"
+          height="500"
+          style={{
+            borderRadius: "12px",
+            background: "rgba(255,182,193,0.4)",
+            border: "none",
+          }}
+        />
+      </div>
+    </div>
+  );
 }
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    background: "linear-gradient(to bottom, #fde2e4, #8b0000)", // soft pink → bold red
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "20px",
+    position: "relative",
+    overflow: "hidden",
+  },
+  title: {
+    fontSize: "3rem",
+    marginBottom: "20px",
+    fontFamily: '"Brush Script MT", cursive',
+    fontWeight: "bold",
+    color: "#ffffff", // white
+    letterSpacing: "0.5em",
+    textAlign: "center",
+    zIndex: 1,
+  },
+  rsvpTitle: {
+    fontFamily: '"Brush Script MT", cursive',
+    fontWeight: "bold",
+    color: "#ffffff", // white
+    letterSpacing: "0.5em",
+    textAlign: "center",
+    fontSize: "2rem",
+    marginBottom: "12px",
+  },
+  card: {
+    background: "rgba(255,182,193,0.4)", // transparent pink
+    borderRadius: "16px",
+    padding: "16px",
+    width: "100%",
+    maxWidth: "400px",
+    marginBottom: "20px",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+    overflow: "hidden",
+    position: "relative",
+    zIndex: 1,
+  },
+};
