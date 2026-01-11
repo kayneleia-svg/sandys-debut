@@ -19,28 +19,18 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // Random rotation for shuffled feel
-  const getRotation = () => {
-    return Math.random() * 8 - 4; // -4° to 4°
-  };
+  // Random slight rotation for shuffle effect
+  const getRotation = () => Math.random() * 6 - 3; // -3° to 3°
 
   const variants = {
-    enter: { opacity: 0, scale: 0.95, rotate: getRotation() },
+    enter: { opacity: 0, scale: 0.98, rotate: getRotation() },
     center: { opacity: 1, scale: 1, rotate: 0 },
-    exit: { opacity: 0, scale: 0.95, rotate: getRotation() },
+    exit: { opacity: 0, scale: 0.98, rotate: getRotation() },
   };
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-pink-200 via-rose-300 to-red-400 overflow-hidden px-4 py-10">
       
-      {/* Background Music */}
-      <iframe
-        src="https://www.youtube.com/embed/FgHCAMRGvt0?autoplay=1&loop=1&playlist=FgHCAMRGvt0"
-        title="Background Music"
-        className="absolute w-0 h-0"
-        allow="autoplay"
-      ></iframe>
-
       {/* Gold hearts from sides */}
       {[...Array(10)].map((_, i) => (
         <motion.div
@@ -71,8 +61,8 @@ export default function Home() {
       </h1>
 
       {/* Slideshow */}
-      <div className="relative w-full max-w-md mb-8">
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-red-300/50 shadow-xl">
+      <div className="relative w-full max-w-lg mb-8 flex justify-center">
+        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-red-300/50 shadow-xl flex justify-center">
           <AnimatePresence mode="wait">
             <motion.img
               key={index}
@@ -82,14 +72,14 @@ export default function Home() {
               animate="center"
               exit="exit"
               transition={{ duration: 1 }}
-              className="w-full rounded-xl border border-red-200/40 shadow-lg"
+              className="w-full max-w-[500px] rounded-xl border border-red-200/40 shadow-lg object-contain"
             />
           </AnimatePresence>
         </div>
       </div>
 
       {/* RSVP Card */}
-      <div className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-red-300/50 shadow-xl">
+      <div className="w-full max-w-lg bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-red-300/50 shadow-xl">
         <h2 className="text-4xl text-yellow-300 font-[Brush_Script_MT] text-center mb-4 drop-shadow-lg">
           RSVP 💌
         </h2>
