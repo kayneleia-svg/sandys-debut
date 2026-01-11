@@ -138,7 +138,7 @@ export default function Home() {
       <div style={styles.card}>
         <h2 style={styles.rsvpTitle}>RSVP</h2>
         <iframe
-          src="https://forms.gle/vim823duYf3UiqPHA"
+          src="https://forms.gle/DztA7kx3Fqcc74fw6"
           width="100%"
           height="500"
           style={{ borderRadius: "12px", background: "rgba(255,182,193,0.4)" }}
