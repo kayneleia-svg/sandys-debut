@@ -71,14 +71,14 @@ function Slideshow({ slides, interval = 5000 }) {
 }
 
 // ================== GOLD HEARTS COMPONENT ==================
-function FloatingHearts({ count = 20 }) {
+function FloatingHearts({ count = 25 }) {
   const hearts = Array.from({ length: count });
 
   return hearts.map((_, i) => {
     const size = Math.random() * 24 + 12; // 12px to 36px
     const left = Math.random() * 100; // % from left
-    const delay = Math.random() * 5; // seconds
-    const duration = Math.random() * 10 + 8; // seconds
+    const delay = Math.random() * 5;
+    const duration = Math.random() * 10 + 8;
 
     return (
       <motion.div
@@ -117,7 +117,7 @@ export default function Home() {
 
   return (
     <div style={styles.page}>
-      <FloatingHearts count={25} /> {/* Gold hearts floating */}
+      <FloatingHearts count={25} />
       <h1 style={styles.title}>You're invited to...</h1>
 
       <Slideshow slides={slides} />
@@ -139,7 +139,7 @@ export default function Home() {
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "linear-gradient(#fde2e4, #e4c1f9)",
+    background: "linear-gradient(to bottom, #fde2e4, #f88379)", // soft pink to red gradient
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -150,20 +150,22 @@ const styles = {
   title: {
     fontSize: "3rem",
     marginBottom: "20px",
-    fontFamily: '"Brush Script MT", cursive',
+    fontFamily: '"Palace Script MT", cursive',
+    fontWeight: "bold",
     color: "gold",
     textAlign: "center",
     zIndex: 1,
   },
   rsvpTitle: {
-    fontFamily: '"Brush Script MT", cursive',
+    fontFamily: '"Palace Script MT", cursive',
+    fontWeight: "bold",
     color: "gold",
     textAlign: "center",
     fontSize: "2rem",
     marginBottom: "12px",
   },
   card: {
-    background: "#fff",
+    background: "rgba(255, 255, 255, 0.9)", // slightly transparent
     borderRadius: "16px",
     padding: "16px",
     width: "100%",
